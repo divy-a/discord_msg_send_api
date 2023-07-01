@@ -20,6 +20,6 @@ def send_message(msg):
             pass
 
         await client.close()
-        exit()
+        #exit()
 
     client.run(os.getenv('TOKEN', ''))
