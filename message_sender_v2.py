@@ -19,7 +19,10 @@ def send_message(msg):
         except:
             pass
 
-        await client.close()
-        #exit()
+        try:
+            await client.close()
+            exit()
+        except:
+            pass
 
     client.run(os.getenv('TOKEN', ''))
