@@ -2,30 +2,22 @@ import discord
 import os
 from dotenv import load_dotenv
 
+load_dotenv()
+
+intents = discord.Intents.default()
+client = discord.Client(intents=intents)
+
 
 def send_message(msg):
-    load_dotenv()
-
-    intents = discord.Intents.default()
-    client = discord.Client(intents=intents)
-
-    @client.event
-    async def on_ready():
-
-        try:
-            subscriber = await client.fetch_user(int(os.getenv('ID', '')))
-            await subscriber.send(msg)
-
-        except Exception as ex:
-            print(ex)
-
-        
-        await client.close()
-        if not client.is_closed():
-            try:
-                exit()
-            except:
-                pass
-        
-    
+    global MESSAGE
+    MESSAGE = msg
     client.run(os.getenv('TOKEN', ''))
+
+
+@client.event
+async def on_ready():
+
+    subscriber = await client.fetch_user(int(os.getenv('ID', '')))
+    await subscriber.send(MESSAGE)
+
+    await client.close()
