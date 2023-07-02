@@ -16,11 +16,16 @@ def send_message(msg):
             subscriber = await client.fetch_user(int(os.getenv('ID', '')))
             await subscriber.send(msg)
 
-        except:
-            pass
+        except Exception as ex:
+            print(ex)
 
         
         await client.close()
-        exit()
-
+        if not client.is_closed():
+            try:
+                exit()
+            except:
+                pass
+        
+    
     client.run(os.getenv('TOKEN', ''))
